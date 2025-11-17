@@ -1,0 +1,32 @@
+﻿using ApiMonitoringBot;
+using ApiMonitoringBot.BackgroundServices;
+using ApiMonitoringBot.Clients;
+using ApiMonitoringBot.Configuration;
+
+Host.CreateDefaultBuilder(args)
+    .ConfigureServices((hostContext, services) =>
+    {
+        // Регистрируем MediatR
+        // Он найдет все обработчики в нашей сборке
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+        // Конфигурация
+        services.Configure<TelegramSettings>(hostContext.Configuration.GetSection(TelegramSettings.SectionName));
+        services.Configure<ApiKeysSettings>(hostContext.Configuration.GetSection(ApiKeysSettings.SectionName));
+        services.Configure<MonitoringSettings>(hostContext.Configuration.GetSection(MonitoringSettings.SectionName));
+
+        // Регистрируем HttpClientFactory для наших будущих API клиентов
+        services.AddHttpClient();
+
+        // Здесь мы будем регистрировать наши клиенты API
+        services.AddHttpClient<BybitClient>(client =>
+        {
+            client.BaseAddress = new Uri("https://api.bybit.com");
+        });
+        // services.AddSingleton<WeatherClient>();
+
+        // Регистрируем наш фоновый сервис
+        services.AddHostedService<MonitoringService>();
+    })
+    .Build()
+    .Run();
