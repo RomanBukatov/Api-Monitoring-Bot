@@ -10,8 +10,15 @@
   <ItemGroup>
     <PackageReference Include="MediatR" Version="13.1.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.0" />
     <PackageReference Include="Telegram.Bot" Version="22.7.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Clients\" />
+    <Folder Include="Configuration\" />
+    <Folder Include="Handlers\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>

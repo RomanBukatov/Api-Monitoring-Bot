@@ -7,6 +7,8 @@ public record BybitTicker
     [JsonPropertyName("symbol")]
     public required string Symbol { get; init; }
 
+    // Используем JsonConverter для автоматического парсинга строки в decimal
     [JsonPropertyName("lastPrice")]
-    public required string LastPrice { get; init; }
+    [JsonConverter(typeof(DecimalJsonConverter))]
+    public decimal LastPrice { get; init; }
 }

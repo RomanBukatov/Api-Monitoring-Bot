@@ -3,6 +3,8 @@ using ApiMonitoringBot.BackgroundServices;
 using ApiMonitoringBot.Clients;
 using ApiMonitoringBot.Configuration;
 
+Console.OutputEncoding  = System.Text.Encoding.UTF8;
+
 Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostContext, services) =>
     {
@@ -23,6 +25,9 @@ Host.CreateDefaultBuilder(args)
         {
             client.BaseAddress = new Uri("https://api.bybit.com");
         });
+
+        // Регистрируем клиентов
+        services.AddSingleton<TelegramClient>();
         // services.AddSingleton<WeatherClient>();
 
         // Регистрируем наш фоновый сервис

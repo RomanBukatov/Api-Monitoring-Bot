@@ -1,6 +1,7 @@
 using ApiMonitoringBot.Models;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace ApiMonitoringBot.Clients;
 
@@ -25,6 +26,11 @@ public class BybitClient
                 cancellationToken);
 
             return response?.Result?.List?.FirstOrDefault();
+        }
+        catch (JsonException ex)
+        {
+            _logger.LogError(ex, "Ошибка парсинга JSON при запросе тикера {Symbol} из Bybit API", symbol);
+            return null;
         }
         catch (Exception ex)
         {
