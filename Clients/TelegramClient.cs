@@ -18,7 +18,7 @@ public class TelegramClient
         _logger = logger;
     }
 
-    public async Task SendMessageAsync(string message, CancellationToken cancellationToken = default)
+    public async Task<bool> SendMessageAsync(string message, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -26,12 +26,14 @@ public class TelegramClient
                 chatId: _settings.ChatId,
                 text: message,
                 cancellationToken: cancellationToken);
-            
+
             _logger.LogInformation("Сообщение успешно отправлено в Telegram.");
+            return true;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Ошибка при отправке сообщения в Telegram.");
+            return false;
         }
     }
 }

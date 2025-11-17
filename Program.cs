@@ -2,6 +2,7 @@
 using ApiMonitoringBot.BackgroundServices;
 using ApiMonitoringBot.Clients;
 using ApiMonitoringBot.Configuration;
+using ApiMonitoringBot.Services;
 
 Console.OutputEncoding  = System.Text.Encoding.UTF8;
 
@@ -28,6 +29,7 @@ Host.CreateDefaultBuilder(args)
 
         // Регистрируем клиентов
         services.AddSingleton<TelegramClient>();
+        services.AddSingleton<RuleStateService>();
         // services.AddSingleton<WeatherClient>();
 
         // Регистрируем наш фоновый сервис
