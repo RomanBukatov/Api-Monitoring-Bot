@@ -30,7 +30,12 @@ Host.CreateDefaultBuilder(args)
         // Регистрируем клиентов
         services.AddSingleton<TelegramClient>();
         services.AddSingleton<RuleStateService>();
-        // services.AddSingleton<WeatherClient>();
+
+        // Регистрируем WeatherClient как типизированный HTTP клиент
+        services.AddHttpClient<WeatherClient>(client =>
+        {
+            client.BaseAddress = new Uri("https://api.openweathermap.org");
+        });
 
         // Регистрируем наш фоновый сервис
         services.AddHostedService<MonitoringService>();
